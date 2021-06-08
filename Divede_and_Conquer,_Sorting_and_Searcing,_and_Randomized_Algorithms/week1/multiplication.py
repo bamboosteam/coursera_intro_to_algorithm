@@ -42,6 +42,7 @@ def Karatsuba(x, y):
         c, d = str(y)[0:half], str(y)[half:n]
         print('a=' + a, 'b=' + b, 'c='+c, 'd='+d, x, y)
         p, q = integer(a) + integer(b), integer(c) + integer(d)
+        # when calculating p, q, their digits are not set as a power of 2 in some cases, that's why it does'nt work for all cases.
         ac = Karatsuba(a, c)
         # print(ac)
         bd = Karatsuba(b, d)
