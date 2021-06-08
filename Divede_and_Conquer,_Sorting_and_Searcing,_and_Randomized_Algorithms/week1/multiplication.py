@@ -40,11 +40,15 @@ def Karatsuba(x, y):
         half = int(n/2)
         a, b = str(x)[0:half], str(x)[half:n]
         c, d = str(y)[0:half], str(y)[half:n]
+        print('a=' + a, 'b=' + b, 'c='+c, 'd='+d, x, y)
         p, q = integer(a) + integer(b), integer(c) + integer(d)
         ac = Karatsuba(a, c)
+        # print(ac)
         bd = Karatsuba(b, d)
-        pq = Karatsuba(p, q)
-        adbc = pq - ac - bd
-    return (10**n)*ac + (10**half)*adbc + bd
+        ad = Karatsuba(a, d)
+        bc = Karatsuba(b, c)
+        # pq = Karatsuba(p, q)
+        # adbc = pq - ac - bd
+    return (10**n)*ac + (10**half)*(ad+bc) + bd
 
-print(Karatsuba(1050, 3762), 1050*3762)
+print(Karatsuba(x, y))
