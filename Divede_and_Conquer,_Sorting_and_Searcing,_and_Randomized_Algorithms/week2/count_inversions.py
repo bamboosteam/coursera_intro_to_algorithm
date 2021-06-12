@@ -16,3 +16,21 @@
 #
 # [TIP: before submitting, first test the correctness of your program on some small test files or your own devising.  Then post your best test cases to the discussion forums to help your fellow students!]
 #
+
+def txt_to_array(path):
+    test_file = open(path, "r")
+    lines = test_file.read().splitlines()
+    return lines
+
+def brute_force_inversions(array):
+    n = len(array)
+    res = 0
+    for i in range(n):
+        for j in range(i, n):
+            if int(array[i]) > int(array[j]):
+                res += 1
+    return res
+
+
+array = txt_to_array("input.txt")
+print(brute_force_inversions(array))
