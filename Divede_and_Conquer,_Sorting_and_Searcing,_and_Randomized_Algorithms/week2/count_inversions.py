@@ -16,6 +16,7 @@
 #
 # [TIP: before submitting, first test the correctness of your program on some small test files or your own devising.  Then post your best test cases to the discussion forums to help your fellow students!]
 #
+# answer for input.txt : 2407905288
 
 def txt_to_array(path):
     test_file = open(path, "r")
@@ -31,6 +32,19 @@ def brute_force_inversions(array):
                 res += 1
     return res
 
+def split_count(array):
+    n = len(array)
+    if n == 1:
+        return 0
+    else:
+        half = int(n/2)
+        left, right = array[0:half], array[half:n]
+        x = split_count(left)
+        y = split_count(right)
+        z = 0
+        for i in range(half):
+            if left[]
+    pass
 
 array = txt_to_array("input.txt")
 print(brute_force_inversions(array))
