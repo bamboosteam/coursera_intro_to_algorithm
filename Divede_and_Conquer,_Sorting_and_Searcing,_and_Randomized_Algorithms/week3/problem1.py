@@ -23,3 +23,13 @@
 # So if your answer is 1198233847, then just type 1198233847 in the space provided without any space / commas / other punctuation marks. You have 5 attempts to get the correct answer.
 #
 # (We do not require you to submit your code, so feel free to use the programming language of your choice, just type the numeric answer in the following space.)
+
+def txt_to_array(path):
+    test_file = open(path, "r")
+    lines = test_file.read().splitlines()
+    return lines
+
+array = txt_to_array("QuickSort.txt")
+
+def quick_sort_first_pivot(array):
+    pass
