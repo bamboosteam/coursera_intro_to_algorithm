@@ -39,12 +39,10 @@ def split_count(array):
     else:
         half = int(n/2)
         left, right = array[0:half], array[half:n]
+        print(left)
         x = split_count(left)
         y = split_count(right)
-        z = 0
-        for i in range(half):
-            if left[]
-    pass
+        return int(x) + int(y)
 
-array = txt_to_array("input.txt")
-print(brute_force_inversions(array))
+array = txt_to_array("input2.txt")
+print(split_count(array))
