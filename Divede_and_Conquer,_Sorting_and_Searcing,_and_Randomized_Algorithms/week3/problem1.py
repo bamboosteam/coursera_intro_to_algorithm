@@ -37,6 +37,21 @@ def quick_sort_first_pivot(array):
         return array
     else:
         p = array[0]
+        comparisons = 0
         # partition array around the p (pivot)
-        
-    pass
+        # i is set as boundary between the pivot and the rest.
+        i = 1
+        for k in range(1, n):
+            if int(p) > int(array[k]):
+                tmp = array[k]
+                array[k] = array[i]
+                array[i] = tmp
+                i += 1
+                comparisons += 1
+        array[0], array[i - 1] = array[i - 1], p
+        first, second = array[0:i-1], array[i:n]
+        first_sorted, second_sorted = quick_sort_first_pivot(first), quick_sort_first_pivot(second)
+        p_array = [p]
+        return first_sorted + p_array + second_sorted
+
+print(quick_sort_first_pivot(array))
