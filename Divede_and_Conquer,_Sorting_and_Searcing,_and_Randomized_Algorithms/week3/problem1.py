@@ -32,4 +32,11 @@ def txt_to_array(path):
 array = txt_to_array("QuickSort.txt")
 
 def quick_sort_first_pivot(array):
+    n = len(array)
+    if n <= 1:
+        return array
+    else:
+        p = array[0]
+        # partition array around the p (pivot)
+        
     pass
