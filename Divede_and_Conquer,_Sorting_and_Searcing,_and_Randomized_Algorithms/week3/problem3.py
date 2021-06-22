@@ -27,7 +27,7 @@ def txt_to_array(path):
 array = txt_to_array("QuickSort.txt")
 comparison = 0
 
-def quick_sort_last_pivot(array, comparison):
+def quick_sort_median_pivot(array, comparison):
     n = len(array)
     if n <= 1:
         return array, 0
@@ -51,10 +51,10 @@ def quick_sort_last_pivot(array, comparison):
                 i += 1
         array[0], array[i - 1] = array[i - 1], p
         first, second = array[0:i-1], array[i:n]
-        first_sorted, first_comparison = quick_sort_last_pivot(first, comparison)
-        second_sorted, second_comparison = quick_sort_last_pivot(second, comparison)
+        first_sorted, first_comparison = quick_sort_median_pivot(first, comparison)
+        second_sorted, second_comparison = quick_sort_median_pivot(second, comparison)
         p_array = [p]
         return first_sorted + p_array + second_sorted, comparison
 
 print(array)
-print(quick_sort_last_pivot(array, comparison))
+print(quick_sort_median_pivot(array, comparison))
