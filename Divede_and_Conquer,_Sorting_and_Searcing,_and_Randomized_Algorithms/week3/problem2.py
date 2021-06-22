@@ -15,7 +15,7 @@ def txt_to_array(path):
     lines = test_file.read().splitlines()
     return lines
 
-array = txt_to_array("test1.txt")
+array = txt_to_array("QuickSort.txt")
 comparison = 0
 
 def quick_sort_last_pivot(array, comparison):

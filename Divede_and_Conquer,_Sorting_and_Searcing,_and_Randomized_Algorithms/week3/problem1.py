@@ -29,12 +29,13 @@ def txt_to_array(path):
     lines = test_file.read().splitlines()
     return lines
 
-array = txt_to_array("QuickSort.txt")
+array = txt_to_array("test1.txt")
+comparison = 0
 
-def quick_sort_first_pivot(array):
+def quick_sort_first_pivot(array, comparison):
     n = len(array)
     if n <= 1:
-        return array
+        return array, 0
     else:
         p = array[0]
         comparisons = 0
@@ -42,16 +43,20 @@ def quick_sort_first_pivot(array):
         # i is set as boundary between the pivot and the rest.
         i = 1
         for k in range(1, n):
+            comparisons += 1
             if int(p) > int(array[k]):
                 tmp = array[k]
                 array[k] = array[i]
                 array[i] = tmp
                 i += 1
-                comparisons += 1
+        print('before: ' + str(comparisons) + ', ' + str(comparison))
+        comparison += comparisons
+        print('after:  ' + str(comparisons) + ', ' + str(comparison))
         array[0], array[i - 1] = array[i - 1], p
         first, second = array[0:i-1], array[i:n]
-        first_sorted, second_sorted = quick_sort_first_pivot(first), quick_sort_first_pivot(second)
+        first_sorted, first_comparison = quick_sort_first_pivot(first, comparison)
+        second_sorted, second_comparison = quick_sort_first_pivot(second, comparison)
         p_array = [p]
-        return first_sorted + p_array + second_sorted
+        return first_sorted + p_array + second_sorted, comparison
 
-print(quick_sort_first_pivot(array))
+print(quick_sort_first_pivot(array, comparison))
