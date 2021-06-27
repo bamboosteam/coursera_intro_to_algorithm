@@ -54,6 +54,7 @@ def quick_sort_median_pivot(array, comparison):
         first_sorted, first_comparison = quick_sort_median_pivot(first, comparison)
         second_sorted, second_comparison = quick_sort_median_pivot(second, comparison)
         p_array = [p]
+        comparison += first_comparison + second_comparison + n - 1
         return first_sorted + p_array + second_sorted, comparison
 
 print(array)

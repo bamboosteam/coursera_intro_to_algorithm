@@ -8,7 +8,7 @@
 #
 #  Your task is to compute the total number of comparisons used to sort the given input file by QuickSort.  As you know, the number of comparisons depends on which elements are chosen as pivots, so we'll ask you to explore three different pivoting rules.
 #
-# You should not count comparisons one-by-one.  Rather, when there is a recursive call on a subarray of length mm, you should simply add m-1m−1 to your running total of comparisons.  (This is because the pivot element is compared to each of the other m-1m−1 elements in the subarray in this recursive call.)
+# You should not count comparisons one-by-one.  Rather, when there is a recursive call on a subarray of length m, you should simply add m-1 to your running total of comparisons.  (This is because the pivot element is compared to each of the other m-1 elements in the subarray in this recursive call.)
 #
 # WARNING: The Partition subroutine can be implemented in several different ways, and different implementations can give you differing numbers of comparisons.  For this problem, you should implement the Partition subroutine exactly as it is described in the video lectures (otherwise you might get the wrong answer).
 #
@@ -29,7 +29,7 @@ def txt_to_array(path):
     lines = test_file.read().splitlines()
     return lines
 
-array = txt_to_array("test1.txt")
+array = txt_to_array("QuickSort.txt")
 comparison = 0
 
 def quick_sort_first_pivot(array, comparison):
@@ -38,25 +38,22 @@ def quick_sort_first_pivot(array, comparison):
         return array, 0
     else:
         p = array[0]
-        comparisons = 0
         # partition array around the p (pivot)
         # i is set as boundary between the pivot and the rest.
         i = 1
         for k in range(1, n):
-            comparisons += 1
             if int(p) > int(array[k]):
                 tmp = array[k]
                 array[k] = array[i]
                 array[i] = tmp
                 i += 1
-        print('before: ' + str(comparisons) + ', ' + str(comparison))
-        comparison += comparisons
-        print('after:  ' + str(comparisons) + ', ' + str(comparison))
         array[0], array[i - 1] = array[i - 1], p
         first, second = array[0:i-1], array[i:n]
-        first_sorted, first_comparison = quick_sort_first_pivot(first, comparison)
-        second_sorted, second_comparison = quick_sort_first_pivot(second, comparison)
+        first_sorted, first_count = quick_sort_first_pivot(first, comparison)
+        second_sorted, second_count = quick_sort_first_pivot(second, comparison)
         p_array = [p]
+        comparison += first_count + second_count + n - 1
+        print(comparison)
         return first_sorted + p_array + second_sorted, comparison
 
 print(quick_sort_first_pivot(array, comparison))
