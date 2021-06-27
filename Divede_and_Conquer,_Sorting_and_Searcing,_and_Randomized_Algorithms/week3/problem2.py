@@ -29,7 +29,6 @@ def quick_sort_last_pivot(array, comparison):
         # i is set as boundary between the pivot and the rest.
         i = 0
         for k in range(0, n-1):
-            comparisons += 1
             if int(p) > int(array[k]):
                 tmp = array[k]
                 array[k] = array[i]
@@ -38,14 +37,13 @@ def quick_sort_last_pivot(array, comparison):
         # print('before: ' + str(comparisons) + ', ' + str(comparison))
         # print(p)
         # print('before: ' + str(array))
-        comparison += comparisons
         # print('after:  ' + str(comparisons) + ', ' + str(comparison))
         array[-1], array[i] = array[i], p
-        # print('after:  ' + str(array))
         first, second = array[0:i], array[i+1:n]
         first_sorted, first_comparison = quick_sort_last_pivot(first, comparison)
         second_sorted, second_comparison = quick_sort_last_pivot(second, comparison)
         p_array = [p]
+        comparison += first_comparison + second_comparison + n - 1
         return first_sorted + p_array + second_sorted, comparison
 
 print(array)
