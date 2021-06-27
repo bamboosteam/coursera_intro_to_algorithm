@@ -9,6 +9,9 @@
 #
 # Recall from the lectures that, just before the main Partition subroutine, you should exchange the pivot element (i.e., the last element) with the first element.
 
+# wrong answer = 160361
+# correct answer = 164123
+
 
 def txt_to_array(path):
     test_file = open(path, "r")
@@ -25,26 +28,38 @@ def quick_sort_last_pivot(array, comparison):
     else:
         p = array[-1]
         comparisons = 0
+        # rearrange array so that the pivot is in the first place
+        array[0], array[-1] = p, array[0]
         # partition array around the p (pivot)
         # i is set as boundary between the pivot and the rest.
-        i = 0
-        for k in range(0, n-1):
+        i = 1
+        for k in range(1, n):
             if int(p) > int(array[k]):
                 tmp = array[k]
                 array[k] = array[i]
                 array[i] = tmp
                 i += 1
-        # print('before: ' + str(comparisons) + ', ' + str(comparison))
-        # print(p)
-        # print('before: ' + str(array))
-        # print('after:  ' + str(comparisons) + ', ' + str(comparison))
-        array[-1], array[i] = array[i], p
-        first, second = array[0:i], array[i+1:n]
-        first_sorted, first_comparison = quick_sort_last_pivot(first, comparison)
-        second_sorted, second_comparison = quick_sort_last_pivot(second, comparison)
+        array[0], array[i - 1] = array[i - 1], p
+        first, second = array[0:i-1], array[i:n]
+        first_sorted, first_count = quick_sort_last_pivot(first, comparison)
+        second_sorted, second_count = quick_sort_last_pivot(second, comparison)
         p_array = [p]
-        comparison += first_comparison + second_comparison + n - 1
+        comparison += first_count + second_count + n - 1
         return first_sorted + p_array + second_sorted, comparison
+        # i = 0
+        # for k in range(0, n-1):
+        #     if int(p) > int(array[k]):
+        #         tmp = array[k]
+        #         array[k] = array[i]
+        #         array[i] = tmp
+        #         i += 1
+        # array[-1], array[i] = array[i], p
+        # first, second = array[0:i], array[i+1:n]
+        # first_sorted, first_comparison = quick_sort_last_pivot(first, comparison)
+        # second_sorted, second_comparison = quick_sort_last_pivot(second, comparison)
+        # p_array = [p]
+        # comparison += first_comparison + second_comparison + n - 1
+        # return first_sorted + p_array + second_sorted, comparison
 
 print(array)
 print(quick_sort_last_pivot(array, comparison))
