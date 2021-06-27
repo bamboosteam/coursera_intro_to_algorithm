@@ -24,6 +24,8 @@
 #
 # (We do not require you to submit your code, so feel free to use the programming language of your choice, just type the numeric answer in the following space.)
 
+# answer = 162085
+
 def txt_to_array(path):
     test_file = open(path, "r")
     lines = test_file.read().splitlines()

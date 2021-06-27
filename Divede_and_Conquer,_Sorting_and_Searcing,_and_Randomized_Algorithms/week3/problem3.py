@@ -14,6 +14,8 @@
 # EXAMPLE: For the input array 8 2 4 5 7 1 you would consider the first (8), middle (4), and last (1) elements; since 4 is the median of the set {1,4,8}, you would use 4 as your pivot element.
 #
 # SUBTLE POINT: A careful analysis would keep track of the comparisons made in identifying the median of the three candidate elements.  You should NOT do this.  That is, as in the previous two problems, you should simply add m-1 to your running total of comparisons every time you recurse on a subarray with length m.
+
+# answer = 138382
 import statistics
 
 def find_median(a, b, c):
