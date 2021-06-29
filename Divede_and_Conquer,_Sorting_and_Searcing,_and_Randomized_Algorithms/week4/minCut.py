@@ -7,3 +7,27 @@
 # (HINT: Note that you'll have to figure out an implementation of edge contractions.  Initially, you might want to do this naively, creating a new graph from the old every time there's an edge contraction.  But you should also think about more efficient implementations.)
 # (WARNING: As per the video lectures, please make sure to run the algorithm many times with different random seeds, and remember the smallest cut that you ever find.)
 # Write your numeric answer in the space provided.  So e.g., if your answer is 5, just type 5 in the space provided.
+
+
+def txt_to_array(path):
+    test_file = open(path, "r")
+    lines = test_file.read().splitlines()
+    return lines
+
+def read_graph(path):
+    test_file = open(path, "r")
+    lines = test_file.readlines()
+    graph = []
+    for i in range(len(lines)):
+        tmp = lines[i].splitlines()
+        index = tmp[0].split("\t")
+        if index[-1] == '':
+            index.pop()
+        graph.append(index)
+    return graph
+
+
+def random_contraction(graph):
+    pass
+
+print(read_graph("kargerMinCut.txt"))
