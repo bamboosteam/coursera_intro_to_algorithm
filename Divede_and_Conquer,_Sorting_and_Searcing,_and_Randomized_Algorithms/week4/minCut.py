@@ -27,24 +27,54 @@ def read_graph(path):
     return graph
 
 graph = read_graph("kargerMinCut.txt")
-
+# print(graph)
 def random_contraction(graph):
     n = len(graph)
     verticies_list = [graph[i][0] for i in range(n)]
     # base case: return the number of edges between the two verticies
     if n == 2:
-        return len(graph[0] - 1)
+        return len(graph[0]) - 1
     else:
         # radomly choose a remaining edge
         # edge is represented by node1 - node2
         node1 = random.choice(verticies_list)
-        verticies = graph[verticies_list.index(node1)]
-        node2 = random.choice(verticies[1:])
+        verticies1 = graph[verticies_list.index(node1)]
+        node2 = random.choice(verticies1[1:])
+        verticies2 = graph[verticies_list.index(node2)]
         # merge node1 and node2 into a single vertex
         # let node2 to be the vertex wchich will be merged.
-        # add pair verticies of node2 to node1
+        # add pair verticies of node2 to node1, then eliminate node1 and node2
+        tmp_verticies2 = [i for i in verticies2[1:] if i != node1]
+        # print(node1, node2)
+        # print(tmp_verticies2)
+        # print(graph)
+        verticies1 += tmp_verticies2
+        graph[verticies_list.index(node1)] = [i for i in verticies1 if i != node2]
+        # remove self loop. remove all node1s from verticies[1:]
+        if node1 in verticies1[1:]:
+            print("yes")
+            tmp = [i for i in verticies1[1:] if i != node1]
+            verticies1 = [node1] + tmp
 
+        # update node2 to node1 in the verticies2
+        # all node2 will be replaced to node1
+        for i in tmp_verticies2:
+            graph[verticies_list.index(i)].append(node1)
+            if node2 in graph[verticies_list.index(i)]:
+                graph[verticies_list.index(i)] = [j for j in graph[verticies_list.index(i)] if j != node2]
+        # verticies1.remove(node2)
 
-        return node1, node2, verticies
+        # remove verticies2 from the graph because it has been merged.
+        graph.pop(verticies_list.index(node2))
+        return random_contraction(graph)
 
-print(random_contraction(graph))
+result = random_contraction(graph)
+iteration = 1000
+for _ in range(iteration):
+    graph = read_graph("kargerMinCut.txt")
+    tmp = random_contraction(graph)
+    print(tmp)
+    if tmp < result:
+        result = tmp
+
+print(result)
