@@ -27,13 +27,17 @@ def read_graph(path):
     return graph
 
 graph = read_graph("kargerMinCut.txt")
-# print(graph)
+
+
 def random_contraction(graph):
+    # initialization
     n = len(graph)
     verticies_list = [graph[i][0] for i in range(n)]
+
     # base case: return the number of edges between the two verticies
     if n == 2:
         return len(graph[0]) - 1
+
     else:
         # radomly choose a remaining edge
         # edge is represented by node1 - node2
@@ -45,14 +49,11 @@ def random_contraction(graph):
         # let node2 to be the vertex wchich will be merged.
         # add pair verticies of node2 to node1, then eliminate node1 and node2
         tmp_verticies2 = [i for i in verticies2[1:] if i != node1]
-        # print(node1, node2)
-        # print(tmp_verticies2)
-        # print(graph)
         verticies1 += tmp_verticies2
         graph[verticies_list.index(node1)] = [i for i in verticies1 if i != node2]
+
         # remove self loop. remove all node1s from verticies[1:]
         if node1 in verticies1[1:]:
-            print("yes")
             tmp = [i for i in verticies1[1:] if i != node1]
             verticies1 = [node1] + tmp
 
@@ -62,7 +63,6 @@ def random_contraction(graph):
             graph[verticies_list.index(i)].append(node1)
             if node2 in graph[verticies_list.index(i)]:
                 graph[verticies_list.index(i)] = [j for j in graph[verticies_list.index(i)] if j != node2]
-        # verticies1.remove(node2)
 
         # remove verticies2 from the graph because it has been merged.
         graph.pop(verticies_list.index(node2))
