@@ -10,6 +10,7 @@
 #
 # WARNING: This is the most challenging programming assignment of the course. Because of the size of the graph you may have to manage memory carefully.
 # The best way to do this depends on your programming language and environment, and we strongly suggest that you exchange tips for doing this on the discussion forums.
+
 import copy as cp
 
 def read_graph(path):
@@ -27,7 +28,7 @@ def read_graph(path):
 def get_keys_from_value(dict, value):
 	return [k for k, v in dict.items() if v == value]
 
-graph = read_graph("test1.txt")
+graph = read_graph("test2.txt")
 verticies_list = [graph[i][0] for i in range(len(graph))]
 n = max(verticies_list)
 explored_list = {}
@@ -40,9 +41,11 @@ for i in range(1, int(n)+1):
 def DFS_Loop(graph):
 	# initialization
 	verticies_list = [graph[i][0] for i in range(len(graph))]
-	n = max(verticies_list)
+	# n = max(verticies_list)
+	n = 875715
 	t = 0  # for finishing times in first pass
 	s = "" # for leader in second pass
+	leaders = []
 	explored_list, finishing_times, local_explored = {}, {}, {}
 	for i in range(1, int(n)+1):
 		explored_list[str(i)], finishing_times[str(i)], local_explored[str(i)] = 0, 0, 0
@@ -51,6 +54,7 @@ def DFS_Loop(graph):
 	for i in reversed(range(1, int(n) + 1)):
 		if explored_list[str(i)] == 0:
 			s = str(i)
+			leaders.append(s)
 			finishing_node = ""
 			while finishing_node != s:
 				finishing_node = DFS(graph, s, explored_list)
@@ -60,7 +64,7 @@ def DFS_Loop(graph):
 				# by using copy module, we can avoid from using same objects with different name.
 				explored_list = cp.copy(local_explored)
 
-	return finishing_times
+	return finishing_times, leaders
 
 
 
@@ -82,11 +86,13 @@ def DFS(graph, node, explored_list):
 			return DFS(graph, i[1], explored_list)
 	return node
 
-print(DFS_Loop(graph))
+# f, l = DFS_Loop(graph)
+# print(f['9'])
 
 # explored_list["4"] = 1
 # explored_list["1"] = 1
 # explored_list["7"] = 1
+# explored_list["9"] = 1
 # explored_list["6"] = 1
 # explored_list["3"] = 1
 # print(DFS(graph, "9", explored_list))
@@ -94,14 +100,33 @@ print(DFS_Loop(graph))
 def count_SCCs(graph):
 	length_graph = len(graph)
 	n = graph[-1][0]
-	# make graph_rev
+	leaders = []
 	graph_rev = []
+	graph_swap = cp.copy(graph)
+	# make graph_rev
 	for i in graph:
 		graph_rev.append([i[1], i[0]])
 
 	# run DFS_Loop on graph_rev to obtain finishing times.
-	finishing_times = DFS_Loop(graph_rev)
+	finishing_times, leaders = DFS_Loop(graph_rev)
 
-	# run DFS_Loop on graph in terms of finishing times
+	# run DFS_Loop on graph regarding to finishing times
+	# firstly, switch the first column with finishing times
+	for i in graph_swap:
+		i[0], i[1] = str(finishing_times[i[0]]), str(finishing_times[i[1]])
+	finishing_times, leaders = DFS_Loop(graph_swap)
+	print("1st step done")
 
-	return graph_rev
+	# count the size of strongly connected conponents
+	size_list = [0]*5
+	size_list[0] = finishing_times[leaders[0]]
+	if len(leaders) >= 5:
+		for i in range(1, 5):
+			size_list[i] = finishing_times[leaders[i]] - finishing_times[leaders[i-1]]
+	else:
+		for i in range(1, len(leaders)):
+			size_list[i] = finishing_times[leaders[i]] - finishing_times[leaders[i-1]]
+
+	return size_list
+
+print(count_SCCs(graph))
